@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+    </head>
+    <body>
+        {% extends "header.html" %}
+        {% block content %}
+        <div class="container">
+            <div id="authorization">
+                <form method="POST">
+                    <h3>Авторизация</h3>
+                    <p>Логин</p>
+                    <input type="text" name="username" id="username">
+                    <p>Пароль</p>
+                    <input type="password" name="password" id="password"><br><br>
+                    <input type="submit" value="Войти"><br><br>
+                    <a href="/registration"><b>Регистрация</b></a>
+                    {% if error == 1 %}
+                    <p>Не все поля заполнены</p>
+                    {% elif error == 2 %}
+                    <p>Введены неверные логин или пароль</p>
+                    {% end %}
+                </form>
+            </div>
+            <div id="users">
+                <h3>Пользователи</h3>
+                {% if users_list %}
+                    {% for user in users_list %}
+                    <p>{{ user }}</p>
+                    {% end %}
+                {% else %}
+                    <p>Никто еще не зарегистрирован</p>
+                {% end %}
+            </div>
+        </div>
+        {% end %}
+    </body>
+</html>
