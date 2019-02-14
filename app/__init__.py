@@ -12,10 +12,10 @@ def make_app():
     return tornado.web.Application([
         (r'/', MainHandler),
         (r'/registration', RegHandler),
-        (r'/profile/.*', ProfileHandler),
+        (r'/profile/([^/]+)', ProfileHandler),
         (r'/logout', LogOutHandler),
         (r'/api/users', UsersJSONHandler),
-        (r'/api/repositories/.*', RepositoriesHandler)
+        (r'/api/repositories/([^/]+)', RepositoriesHandler)
     ], **settings
     )
 

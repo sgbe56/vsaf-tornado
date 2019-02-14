@@ -8,6 +8,7 @@
         <div class="container">
             <div id="registration">
                 <form method="POST">
+                    {% module xsrf_form_html() %}
                     <h3>Регистрация</h3>
                     <p>Логин</p>
                     <input type="text" name="username" id="username">
@@ -15,10 +16,10 @@
                     <input type="password" name="password" id="password"><br><br>
                     <input type="submit" name="submitbutton" value="Зарегистрироваться">
                     {% if error == 1 %}
-                    <p>Не все поля заполнены</p>
+                    <p class="error">Не все поля заполнены</p>
                     {% end %}
                     {% if error == 2 %}
-                    <p>Пользователь с таким логином уже существует</p>
+                    <p class="error">Пользователь с таким логином уже существует</p>
                     {% end %}
                     {% end %}
                 </form>

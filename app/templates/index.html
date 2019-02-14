@@ -8,6 +8,7 @@
         <div class="container">
             <div id="authorization">
                 <form method="POST">
+                    {% module xsrf_form_html() %}
                     <h3>Авторизация</h3>
                     <p>Логин</p>
                     <input type="text" name="username" id="username">
@@ -16,9 +17,9 @@
                     <input type="submit" value="Войти"><br><br>
                     <a href="/registration"><b>Регистрация</b></a>
                     {% if error == 1 %}
-                    <p>Не все поля заполнены</p>
+                    <p class="error">Не все поля заполнены</p>
                     {% elif error == 2 %}
-                    <p>Введены неверные логин или пароль</p>
+                    <p class="error">Введены неверные логин или пароль</p>
                     {% end %}
                 </form>
             </div>
