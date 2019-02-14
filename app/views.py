@@ -4,7 +4,7 @@ import tornado.web
 from tornado import httpclient
 
 from .AuthManager import AuthManager
-from .decorator import Decorator
+from .decorator import AccessMixin
 from .models import Users
 
 
@@ -84,8 +84,10 @@ class ProfileHandler(ApplicationHandler):
         return self.redirect('/')
 
 
-@Decorator(list_of_valid_funcs=['get'])
-class UsersJSONHandler(tornado.web.RequestHandler):
+class UsersJSONHandler(AccessMixin, tornado.web.RequestHandler):
+    def prepare(self):
+        super().prepare(self, valid_funcs=('get',))
+
     def get(self):
         users = [user for user in Users.select(Users.username).dicts()]
         self.set_header('Content-type', 'application/json')
