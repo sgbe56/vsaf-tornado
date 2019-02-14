@@ -1,6 +1,4 @@
 import base64
-import inspect
-from functools import wraps
 
 from .AuthManager import AuthManager
 
@@ -36,4 +34,3 @@ class AccessMixin:
         super().prepare()
         if self.request.method in valid_funcs:
             auth_required(self, True)
-
