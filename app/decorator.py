@@ -12,37 +12,28 @@ def error_auth(handler):
                          'You have to login with proper credentials')
 
 
-def auth_required(cls, handler, check_basic_auth=True):  # Проверка введенных данных, перед перенаправлением в профиль
-    @wraps(handler)
-    def wrapper(*args, **kwargs):
-        if not cls.get_secure_cookie('username'):
-            if check_basic_auth:
-                auth = cls.request.headers.get('Authorization', None)
+def auth_required(cls, check_basic_auth=False):  # Проверка введенных данных, перед перенаправлением в профиль
+    if not cls.get_secure_cookie('username'):
+        if check_basic_auth:
+            auth = cls.request.headers.get('Authorization', None)
 
-                if auth is None:
-                    return error_auth(cls)
+            if auth is None:
+                return error_auth(cls)
 
-                username, password = tuple(base64.b64decode(auth[6:].encode('utf-8')).decode('utf-8').split(':'))
+            username, password = tuple(base64.b64decode(auth[6:].encode('utf-8')).decode('utf-8').split(':'))
 
-                if AuthManager.check_user(username, password):
-                    cls.set_secure_cookie('username', username)
-                    return handler(*args, **kwargs)
-                else:
-                    error_auth(cls)
-            return cls.redirect('/')
-        return handler(*args, **kwargs)
-
-    return wrapper
+            if AuthManager.check_user(username, password):
+                cls.set_secure_cookie('username', username)
+                return cls
+            else:
+                error_auth(cls)
+        return cls.redirect('/')
+    return cls
 
 
 class AccessMixin:
-    def prepare(self, cls, valid_funcs=('get', 'post', 'patch', 'put', 'delete', 'head', 'options')):
+    def prepare(self, valid_funcs=('GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'HEAD', 'OPTIONS')):
         super().prepare()
+        if self.request.method in valid_funcs:
+            auth_required(self, True)
 
-        all_funcs = dict(inspect.getmembers(cls, inspect.ismethod(object)))
-        existing_funcs = [(valid_func, all_funcs[valid_func]) for valid_func in valid_funcs
-                          if all_funcs[valid_func] is not None]
-
-        for name, func in existing_funcs:
-            if name in valid_funcs:
-                setattr(cls, name, auth_required(cls, func))

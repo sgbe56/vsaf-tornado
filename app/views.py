@@ -86,7 +86,7 @@ class ProfileHandler(ApplicationHandler):
 
 class UsersJSONHandler(AccessMixin, tornado.web.RequestHandler):
     def prepare(self):
-        super().prepare(self, valid_funcs=('get',))
+        super().prepare(valid_funcs=('GET',))
 
     def get(self):
         users = [user for user in Users.select(Users.username).dicts()]
