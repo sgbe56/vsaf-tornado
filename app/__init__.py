@@ -1,15 +1,20 @@
 import peewee
-import tornado
+from tornado import web
 
 from config import settings
 
 db = peewee.SqliteDatabase(settings['db_name'])
 
-from .views import MainHandler, RegHandler, ProfileHandler, LogOutHandler, UsersJSONHandler, RepositoriesHandler
+from app.MainHandler import MainHandler
+from app.RegHandler import RegHandler
+from app.ProfileHandler import ProfileHandler
+from app.LogOutHandler import LogOutHandler
+from app.UsersJSONHandler import UsersJSONHandler
+from app.RepositoriesHandler import RepositoriesHandler
 
 
 def make_app():
-    return tornado.web.Application([
+    return web.Application([
         (r'/', MainHandler),
         (r'/registration', RegHandler),
         (r'/profile/([^/]+)', ProfileHandler),
