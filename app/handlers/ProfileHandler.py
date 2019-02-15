@@ -1,5 +1,5 @@
 from .ApplicationHandler import ApplicationHandler
-from .models import Users
+from app.models import Users
 
 
 class ProfileHandler(ApplicationHandler):
@@ -16,6 +16,6 @@ class ProfileHandler(ApplicationHandler):
                 except Users.DoesNotExist:
                     return self.redirect('/profile/' + self.get_current_user())
 
-            return self.render('templates/profile.html', username=username, guest=guest,
+            return self.render('profile.html', username=username, guest=guest,
                                title=username + f'\'s profile')
         return self.redirect('/')

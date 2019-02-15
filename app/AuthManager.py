@@ -1,7 +1,4 @@
-from functools import wraps
-
 import bcrypt
-from flask import request, Response, session
 
 from .models import Users
 

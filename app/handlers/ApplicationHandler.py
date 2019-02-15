@@ -1,6 +1,6 @@
 from tornado.web import RequestHandler
 
-from .models import Users
+from app.models import Users
 
 
 class ApplicationHandler(RequestHandler):

@@ -4,13 +4,10 @@ from .AuthManager import AuthManager
 
 
 def base64_parser(self, auth):
-    if re.match(r'Basic\s', auth):
-        auth = re.sub(r'Basic\s', '', auth)
-        if not re.findall(f'\s+', auth):
-            auth = base64.b64decode(auth.encode('utf-8')).decode('utf-8')
-            return tuple(re.split(r':', auth))
-        else:
-            return error_auth(self)
+    result = re.match(r'(\w+\s)(\w+|\d+)(==)', auth)
+    if result:
+        result = base64.b64decode((result.group(2) + result.group(3)).encode('utf-8')).decode('utf-8')
+        return tuple(re.split(r':', result))
     return error_auth(self)
 
 

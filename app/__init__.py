@@ -5,12 +5,12 @@ from config import settings
 
 db = peewee.SqliteDatabase(settings['db_name'])
 
-from app.MainHandler import MainHandler
-from app.RegHandler import RegHandler
-from app.ProfileHandler import ProfileHandler
-from app.LogOutHandler import LogOutHandler
-from app.UsersJSONHandler import UsersJSONHandler
-from app.RepositoriesHandler import RepositoriesHandler
+from app.handlers.MainHandler import MainHandler
+from app.handlers.RegHandler import RegHandler
+from app.handlers.ProfileHandler import ProfileHandler
+from app.handlers.LogOutHandler import LogOutHandler
+from app.handlers.UsersJSONHandler import UsersJSONHandler
+from app.handlers.RepositoriesHandler import RepositoriesHandler
 
 
 def make_app():
