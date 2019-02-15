@@ -40,5 +40,5 @@ def auth_required(self, check_basic_auth=False):
 class AccessMixin:
     def prepare(self, valid_funcs=('get', 'post', 'patch', 'put', 'delete', 'head', 'options')):
         super().prepare()
-        if self.request.method.lower() in valid_funcs:
+        if self.request.method.lower() in map(lambda x: x.lower(), valid_funcs):
             auth_required(self, True)
