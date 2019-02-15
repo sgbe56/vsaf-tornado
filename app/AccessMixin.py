@@ -5,7 +5,7 @@ from .AuthManager import AuthManager
 
 def base64_parser(self, auth):
     result = re.match(r'(\w+\s)(\w+|\d+)(==)', auth)
-    if result:
+    if result and result.group(1) == 'Basic ':
         result = base64.b64decode((result.group(2) + result.group(3)).encode('utf-8')).decode('utf-8')
         return tuple(re.split(r':', result))
     return error_auth(self)
