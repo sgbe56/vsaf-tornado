@@ -1,5 +1,6 @@
 import base64
 import re
+
 from .AuthManager import AuthManager
 
 
@@ -15,7 +16,7 @@ def error_auth(self):
     self.set_header('WWW-Authenticate', 'Basic realm=vsaf')
     self.set_status(401)
     return self.write('Could not verify your access level for that URL.\n'
-                         'You have to login with proper credentials')
+                      'You have to login with proper credentials')
 
 
 def auth_required(self, check_basic_auth=False):
@@ -30,10 +31,10 @@ def auth_required(self, check_basic_auth=False):
 
             if AuthManager.check_user(username, password):
                 self.set_secure_cookie('username', username)
-                return self
+                return self.redirect('/api/users')
             else:
-                error_auth(self)
-        return self.redirect('/')
+                return error_auth(self)
+        return error_auth(self)
     return self
 
 
