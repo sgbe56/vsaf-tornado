@@ -11,6 +11,7 @@ class RepositoriesHandler(RequestHandler):
         try:
             response = await http_client.fetch(url, headers={'User-Agent': login})
         except httpclient.HTTPClientError as e:
+            self.set_status(404)
             return self.write(f'Error: {e}')
         else:
             repositories = json.loads(response.body)

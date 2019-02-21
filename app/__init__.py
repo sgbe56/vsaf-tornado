@@ -20,7 +20,7 @@ def make_app():
         (r'/profile/([^/]+)', ProfileHandler),
         (r'/logout', LogOutHandler),
         (r'/api/users', UsersJSONHandler),
-        (r'/api/repositories/([^/]+)', RepositoriesHandler)
+        (r'/api/repos/([^/]+)', RepositoriesHandler)
     ], **settings
     )
 
