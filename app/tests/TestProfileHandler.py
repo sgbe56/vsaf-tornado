@@ -17,7 +17,7 @@ class TestProfileHandler(AsyncHTTPTestCase):
         headers = {
             'Cookie': '='.join(('username', secure_cookie.decode('utf-8')))
         }
-        response = requests.get(url, headers=headers)
-        self.assertEqual(response.status_code, 200)
-        self.assertIn('Привет, ' + username_in_url, response.text)
+        response = self.fetch(url, method='GET', headers=headers)
+        self.assertEqual(response.code, 200)
+        self.assertIn('Привет, ' + username_in_url, response.body.decode('utf-8'))
         self.assertEqual(username, username_in_url, 'Посещение не своего профиля')

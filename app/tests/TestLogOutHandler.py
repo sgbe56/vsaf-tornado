@@ -16,5 +16,5 @@ class TestLogOutHandler(AsyncHTTPTestCase):
         headers = {
             'Cookie': '='.join(('username', secure_cookie.decode('utf-8')))
         }
-        response = requests.get(url)
-        self.assertEqual(response.status_code, 200)
+        response = self.fetch(url, method='GET', headers=headers)
+        self.assertEqual(response.code, 200)

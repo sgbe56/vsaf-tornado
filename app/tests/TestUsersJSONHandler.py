@@ -18,6 +18,6 @@ class TestUsersJSONHandler(AsyncHTTPTestCase):
         headers = {
             'Authorization': 'Basic ' + basic_auth.decode('utf-8'),
         }
-        response = requests.get(url, headers=headers)
-        self.assertNotEqual(response.status_code, 401, 'Ошибка авторизации')
-        self.assertNotEqual(response.status_code, 500, 'Введены не верные данные')
+        response = self.fetch(url, method='GET', headers=headers)
+        self.assertNotEqual(response.code, 401, 'Ошибка авторизации')
+        self.assertNotEqual(response.code, 500, 'Введены не верные данные')
